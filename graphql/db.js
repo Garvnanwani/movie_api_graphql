@@ -1,31 +1,45 @@
-export const people = [{
-    id: 1,
-    name: "Garv",
-    age: 20,
-    gender: "male"
-}, {
-    id: 2,
-    name: "Something",
-    age: 20,
-    gender: "female"
-}, {
-    id: 3,
-    name: "name",
-    age: 20,
-    gender: "hello"
-}, {
-    id: 4,
-    name: "hey",
-    age: 20,
-    gender: "female"
-}, {
-    id: 5,
-    name: "kuch bhi",
-    age: 20,
-    gender: "female"
-}]
+import axios from "axios";
+const BASE_URL = "https://yts-proxy.now.sh/";
+const LIST_MOVIES_URL = `${BASE_URL}list_movies.json`;
+const MOVIE_DETAILS_URL = `${BASE_URL}movie_details.json`;
+const MOVIE_SUGGESTIONS_URL = `${BASE_URL}movie_suggestions.json`;
 
-export const getById = (id) => {
-    const filteredPeople = people.filter(person => id === person.id)
-    return filteredPeople[0]
-}
+export const getMovies = async (limit, rating) => {
+  const {
+    data: {
+      data: { movies }
+    }
+  } = await axios(LIST_MOVIES_URL, {
+    params: {
+      limit,
+      minimum_rating: rating
+    }
+  });
+  return movies;
+};
+
+export const getMovie = async id => {
+  const {
+    data: {
+      data: { movie }
+    }
+  } = await axios(MOVIE_DETAILS_URL, {
+    params: {
+      movie_id: id
+    }
+  });
+  return movie;
+};
+
+export const getSuggestions = async id => {
+  const {
+    data: {
+      data: { movies }
+    }
+  } = await axios(MOVIE_SUGGESTIONS_URL, {
+    params: {
+      movie_id: id
+    }
+  });
+  return movies;
+};
