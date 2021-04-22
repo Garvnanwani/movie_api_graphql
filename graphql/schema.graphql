@@ -1,9 +1,11 @@
-type Garv {
+type People {
+    id: Int!
     name: String!
     age: Int!
     gender: String!
 }
 
 type Query {
-    person: Garv!
+    people: [People]!
+    person(id: Int!): People
 }
